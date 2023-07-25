@@ -1,0 +1,40 @@
+version: "3.7"
+
+services:
+  app:
+    build: ./docker
+    container_name: php-app
+    image: php:8.1-apache
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www
+
+  db:
+    image: mysql:8
+    container_name: php-db
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./docker/mysql-config.cnf:/etc/mysql/conf.d/config.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: php-app
+      MYSQL_USER: user
+      MYSQL_PASSWORD: secret
+
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+    restart: always
+    ports:
+      - 8081:80
+
+volumes:
+  mysql-data:

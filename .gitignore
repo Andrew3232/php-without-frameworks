@@ -1,0 +1,12 @@
+composer.phar
+/vendor/
+
+node_modules/
+npm-debug.log
+yarn-error.log
+
+storage/*.key
+.env
+.phpunit.result.cache
+
+/.idea/
