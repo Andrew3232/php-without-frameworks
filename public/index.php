@@ -24,7 +24,7 @@ require __DIR__ . '/../include/header.php';
 <div class="container mt-4">
     <div class="d-flex justify-content-between mb-4">
         <h1> Posts</h1>
-        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addPost">+ Add post</button>
+        <button type="button" class="btn btn-primary btn-sm w-25" style="max-width: 200px" data-bs-toggle="modal" data-bs-target="#addPost">+ Add post</button>
     </div>
 
     <div class="d-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4" id="posts_container">
@@ -48,17 +48,14 @@ require __DIR__ . '/../include/header.php';
             </div>
         <?endforeach;?>
     </div>
-	<?if(empty($posts)):?>
-        <p class="text-secondary text-center mt-2">No posts added yet</p>
-	<?endif;?>
+    <p class="text-secondary text-center mt-2 <?if(!empty($posts)) echo 'd-none';?>" id="empty_posts">No posts added yet</p>
 </div>
-
 
 <div class="d-none" id="post_template">
     <div class="card h-100" id="post-#id">
         <div class="card-body">
             <h5 class="card-title">#title</h5>
-            <p class="card-text">#title</p>
+            <p class="card-text">#text</p>
             <p class="card-text"><small class="text-body-secondary">#time</small></p>
         </div>
         <div class="card-footer">
