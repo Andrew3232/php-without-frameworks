@@ -1,6 +1,8 @@
 $(document).ready(() => {
     var post_template = $('#post_template').clone().html();
     $('#post_template').remove();
+    const $emptyPosts = $('#empty_posts');
+    const $postsContainer = $('#posts_container');
 
     const toastSuccessTrigger = document.getElementById('toastSuccessBtn');
     const toastSuccess = document.getElementById('toastSuccess');
@@ -11,9 +13,11 @@ $(document).ready(() => {
             toastBootstrap.show();
         });
     }
+    const $toastSuccessText = $('#toastSuccess .toast-body');
 
     const toastErrorTrigger = document.getElementById('toastErrorBtn');
     const toastError = document.getElementById('toastError');
+    const $toastErrorText = $('#toastError .toast-body');
     if (toastErrorTrigger) {
         const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastError);
         toastErrorTrigger.addEventListener('click', () =>
@@ -51,20 +55,20 @@ $(document).ready(() => {
                         replaceAll('#id', post.id).
                         replaceAll('#text', post.text).
                         replaceAll('#time', result.time);
-                    $('#posts_container').prepend(post_html);
-                    if($('#posts_container').length) {
-                        $('#empty_posts').addClass('d-none');
+                    $postsContainer.prepend(post_html);
+                    if($postsContainer.length) {
+                        $emptyPosts.addClass('d-none');
                     }
                     $('#addPost .btn-close').click();
                     $this.each(function()
                     {
                         this.reset();
                     });
-                    $('#toastSuccess .toast-body').text(result.message);
+                    $toastSuccessText.text(result.message);
                     toastSuccessTrigger.click();
                 } else
                 {
-                    $('#toastError .toast-body').text(result.errors.join('<br>'));
+                    $toastErrorText.text(result.errors.join('<br>'));
                     toastErrorTrigger.click();
                 }
             },
@@ -81,8 +85,7 @@ $(document).ready(() => {
             method: 'GET',
             dataType: 'json',
             data: {'id': id},
-            success: function(result)
-            {
+            success: function(result) {
                 if (result.status === 'success')
                 {
                     let post = result.post;
@@ -92,7 +95,7 @@ $(document).ready(() => {
                     $('#updatePostModalBtn').click();
                 } else
                 {
-                    $('#toastError .toast-body').text(result.errors.join('<br>'));
+                    $toastErrorText.text(result.errors.join('<br>'));
                     toastErrorTrigger.click();
                 }
             },
@@ -131,11 +134,11 @@ $(document).ready(() => {
 
                     $(document).find('#posts_container #post-' + post.id).replaceWith(post_html);
                     $('#updatePost .btn-close').click();
-                    $('#toastSuccess .toast-body').text(result.message);
+                    $toastSuccessText.text(result.message);
                     toastSuccessTrigger.click();
                 } else
                 {
-                    $('#toastError .toast-body').text(result.errors.join('<br>'));
+                    $toastErrorText.text(result.errors.join('<br>'));
                     toastErrorTrigger.click();
                 }
             },
@@ -150,27 +153,24 @@ $(document).ready(() => {
             url: 'posts/delete.php?' + $.param({'id': id}),
             method: 'DELETE',
             dataType: 'json',
-            beforeSend: function()
-            {
-            },
             success: function(result)
             {
                 if (result.status === 'success')
                 {
                     if (toastSuccessTrigger)
                     {
-                        $('#toastSuccess .toast-body').text(result.message);
+                        $toastSuccessText.text(result.message);
                         toastSuccessTrigger.click();
                     }
                     $this.closest('.card').fadeOut();
-                    if($('#posts_container').length === 0) {
-                        $('#empty_posts').removeClass('d-none');
+                    if($postsContainer.length <= 1) {
+                        $emptyPosts.removeClass('d-none');
                     }
                 } else
                 {
                     if (toastErrorTrigger)
                     {
-                        $('#toastError .toast-body').text(result.message);
+                        $toastErrorText.text(result.message);
                         toastErrorTrigger.click();
                     }
                 }
