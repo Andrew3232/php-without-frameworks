@@ -20,12 +20,12 @@ else
 	{
 		$errors[] = 'Enter text';
 	}
-	$post = new Post();
-	$post->loadData($_POST);
-	$id = $post->save();
 
 	if(empty($errors))
 	{
+		$post = new Post();
+		$post->loadData($_POST);
+		$id = $post->save();
 		$post = Post::findOne(['id' => $id]);
 		$response = [
 			'status' => 'success',

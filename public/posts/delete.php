@@ -15,20 +15,23 @@ else
 	{
 		$message = 'Post not found';
 	}
-	$result = Post::delete($_REQUEST['id']);
 
-	if(!$message && $result)
+	if(!$message)
 	{
-		$response = [
-			'status' => 'success',
-			'message' => 'Post successfully deleted!'
-		];
-	}
-	elseif(!$result){
-		$response = [
-			'status' => 'error',
-			'message' => 'Post has been deleted!'
-		];
+		$result = Post::delete($_REQUEST['id']);
+		if($result)
+		{
+			$response = [
+				'status' => 'success',
+				'message' => 'Post successfully deleted!'
+			];
+		}
+		else{
+			$response = [
+				'status' => 'error',
+				'message' => 'Post has been deleted!'
+			];
+		}
 	}
 	else{
 		$response = [

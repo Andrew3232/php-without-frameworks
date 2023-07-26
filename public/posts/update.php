@@ -22,11 +22,10 @@ else
 		$errors[] = 'Enter text';
 	}
 
-	$post = Post::findOne(['id' => $id]);
-	$result = $post->update($_REQUEST);
-
-	if(empty($errors) || $result)
+	if(empty($errors))
 	{
+		$post = Post::findOne(['id' => $id]);
+		$result = $post->update($_REQUEST);
 		$post = Post::findOne(['id' => $id]);
 		$response = [
 			'status' => 'success',

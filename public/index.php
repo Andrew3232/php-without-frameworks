@@ -1,21 +1,10 @@
 <?php
 
 use App\Models\Post;
-use App\Services\DatabaseConnection;
 use Carbon\Carbon;
-
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$host = 'db';
-$user = 'user';
-$pass = 'secret';
-$name = 'php-app';
-
 $posts = Post::all('id','desc');
-
-$instance = DatabaseConnection::getInstance();
-$conn = $instance->getConnection();
-
 $title = 'Home';
 
 require __DIR__ . '/../include/header.php';
@@ -23,10 +12,13 @@ require __DIR__ . '/../include/header.php';
 
 <div class="container mt-4">
     <div class="d-flex justify-content-between mb-4">
-        <h1> Posts</h1>
-        <button type="button" class="btn btn-primary btn-sm w-25" style="max-width: 200px" data-bs-toggle="modal" data-bs-target="#addPost">+ Add post</button>
+        <h1>Posts</h1>
+        <button type="button" class="btn btn-primary btn-sm w-25" style="max-width: 200px; min-width: fit-content;" data-bs-toggle="modal" data-bs-target="#addPost">+ Add post</button>
     </div>
 
+    <div class="mt-2 mb-2">
+        <p class="text-secondary text-center mt-2 <?if(!empty($posts)) echo 'd-none';?>" id="empty_posts">No posts added yet</p>
+    </div>
     <div class="d-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4" id="posts_container">
         <?foreach($posts as $post):?>
             <div class="card h-100" id="post-<?=$post->id?>">
@@ -48,7 +40,6 @@ require __DIR__ . '/../include/header.php';
             </div>
         <?endforeach;?>
     </div>
-    <p class="text-secondary text-center mt-2 <?if(!empty($posts)) echo 'd-none';?>" id="empty_posts">No posts added yet</p>
 </div>
 
 <div class="d-none" id="post_template">
