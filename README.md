@@ -36,7 +36,10 @@ phpMyAdmin should be ready on `http://localhost:8081`
 
 
 ## Tests
-
+Running tests
+```bash
+docker exec -it php-app php ./vendor/bin/phpunit tests/Unit
+```
 ## Debugging 
 
 To debug the application we highly recommend you to use xDebug, it is already pre-installed in dockerized environment, but you should setup your IDE.
