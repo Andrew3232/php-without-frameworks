@@ -1,6 +1,12 @@
 {
-  "name": "php/project",
+  "name": "andrew3232/php-project",
   "type": "project",
+  "authors": [
+    {
+      "name": "Andrii Oleinych",
+      "email": "work.olenitch@gmail.com"
+    }
+  ],
   "description": "php project without frameworks",
   "autoload": {
     "psr-4": {
@@ -10,6 +16,8 @@
   },
   "require": {
     "ext-pdo": "*",
-    "nesbot/carbon": "^2.68"
+    "nesbot/carbon": "^2.68",
+    "phpunit/phpunit": "^10.2",
+    "guzzlehttp/guzzle": "^7.7"
   }
 }
